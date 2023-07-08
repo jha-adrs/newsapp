@@ -20,7 +20,7 @@ export class Navbar extends Component {
                                     <a className="nav-link active" aria-current="page" href="/Home">Home</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/Trending">Trending</a>
+                                    <a className="nav-link" href="/Premium">Premium</a>
                                 </li>
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
