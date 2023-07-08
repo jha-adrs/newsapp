@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import logo from '../assets/android-chrome-512x512.png'
 export default class NewsComponent extends Component {
     static defaultProps = {
         title: 'Error Occured',
         description: 'Could not retrieve data',
         articleLink: 'www.google.com',
-        imageLink :{logo}
+        imageLink : 'https://dog.ceo/api/breeds/image/random'
     };
 
     render() {
@@ -14,11 +13,11 @@ export default class NewsComponent extends Component {
         return (
             <div>
                 <div className="card" style={{width: "18rem"}}>
-                    <img src="..." className="card-img-top" alt="..."/>
+                    <img src={imageLink} className="card-img-top" alt="..."/>
                         <div className="card-body">
                             <h5 className="card-title">{title}</h5>
                             <p className="card-text">{description}</p>
-                            <a href="/" className="btn btn-primary">Go somewhere</a>
+                            <a href={articleLink} className="btn btn-primary">Go to Article</a>
                         </div>
                 </div>
             </div>

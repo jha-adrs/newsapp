@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import logoSvg from "../assets/logo-newsapp-light.svg";
+import { useState } from "react";
 
 export class Navbar extends Component {
-
 
     render() {
         return (
