@@ -12,12 +12,12 @@ export default class NewsComponent extends Component {
 
         return (
             <div>
-                <div className="card" style={{width: "18rem"}}>
-                    <img src={imageLink} className="card-img-top" alt="..."/>
+                <div className="card my-3 " style={{width: "18rem"}} data-bs-theme="dark">
+                    <img src={imageLink} className="card-img-top " alt="..." style={{height:"200px"}}/>
                         <div className="card-body">
                             <h5 className="card-title">{title}</h5>
                             <p className="card-text">{description}</p>
-                            <a href={articleLink} className="btn btn-primary">Go to Article</a>
+                            <a href={articleLink} className="btn btn-danger">Go to Article</a>
                         </div>
                 </div>
             </div>

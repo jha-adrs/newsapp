@@ -4,7 +4,7 @@ import logoSvg from "../assets/logo-newsapp-light.svg";
 import { useState } from "react";
 
 export class Navbar extends Component {
-
+    mystyle = {fontSize:"20px"};
     render() {
         return (
             <>
@@ -13,17 +13,17 @@ export class Navbar extends Component {
                         <a className="navbar-brand" href="/Home">
                             <img src={logoSvg} alt="Logo" width="50" height="50" className="d-inline-block align-text-top" />
                         </a>
-                        <span className="navbar-brand mb-0 h1" id="brand-name">News with React</span>
+                        <span className="navbar-brand mb-0 h1" id="brand-name" style={{fontFamily:"Glass Antiqua, cursive", fontSize:"40px"}}>News with React</span>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="/Home">Home</a>
+                                    <a className="nav-link active" aria-current="page" href="/Home" style={this.mystyle}>Home</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/Premium">Premium</a>
+                                    <a className="nav-link" href="/Premium" style={this.mystyle}>Premium</a>
                                 </li>
                                 <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a className="nav-link dropdown-toggle" href="#" style={this.mystyle} role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Topics
                                     </a>
                                     <ul className="dropdown-menu">
