@@ -11,8 +11,8 @@ export default class NewsComponent extends Component {
         let {title, description, articleLink, imageLink} = this.props;
 
         return (
-            <div>
-                <div className="card my-3 " style={{width: "18rem"}} data-bs-theme="dark">
+            <div >
+                <div className="card border border-danger my-3 " style={{width: "18rem"}} data-bs-theme="dark">
                     <img src={imageLink} className="card-img-top " alt="..." style={{height:"200px"}}/>
                         <div className="card-body">
                             <h5 className="card-title">{title}</h5>
