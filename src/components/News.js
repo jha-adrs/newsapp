@@ -6,15 +6,16 @@ import PropTypes from 'prop-types';
 
 export default class News extends Component {
     static defaultProps = {
-        country:'in',
+        country: 'in',
         pageSize: 4,
-        category: 'general'
-    }
-    static PropTypes = {
-        country:PropTypes.string,
+        category: 'general',
+        headline: 'Top'
+    };
+    static propTypes = {
+        country: PropTypes.string,
         pageSize: PropTypes.number,
         category: PropTypes.string
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -26,7 +27,7 @@ export default class News extends Component {
             nextButtonState: false
         }
     }
-    
+
 
     /*Runs after the return thing is rendered*/
     async componentDidMount() {
@@ -35,7 +36,7 @@ export default class News extends Component {
         let data = await fetch(url);
         let parsedData = await data.json();
         this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults });
-        
+
         console.log("Fetch Done");
     }
     handleNext = async () => {
@@ -45,7 +46,7 @@ export default class News extends Component {
         }
         else {
             this.setState({
-                page: this.state.page + 1, loading:true
+                page: this.state.page + 1, loading: true
             })
             console.log("Fetching through API");
             let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c1aa2105825b431591bdd4ee903f5165&page=${this.state.page}&pageSize=${this.props.pageSize}`
@@ -53,8 +54,8 @@ export default class News extends Component {
             let parsedData = await data.json();
             this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults });
             console.log("Fetch Done");
-            
-            this.setState({loading:false});
+
+            this.setState({ loading: false });
         }
 
     }
@@ -69,15 +70,15 @@ export default class News extends Component {
                 page: this.state.page - 1
 
             })
-            this.setState({ nextButtonState: false, loading:true });
+            this.setState({ nextButtonState: false, loading: true });
             console.log("Fetching through API");
             let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c1aa2105825b431591bdd4ee903f5165&page=${this.state.page}&pageSize=${this.props.pageSize}`
             let data = await fetch(url);
             let parsedData = await data.json();
             this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults });
             console.log("Fetch Done");
-            
-            this.setState({loading:false});
+
+            this.setState({ loading: false });
         }
     }
 
@@ -87,7 +88,7 @@ export default class News extends Component {
         return (
             <div className='container my-3' id='news-container'>
 
-                <h2 id='top-headlines my-2'>Top Headlines</h2>
+                <h2 id='top-headlines my-2'>{this.props.headline} Headlines</h2>
                 {this.state.loading && <Spinner />}
                 <div className='row'>
                     {this.state.articles && this.state.articles.map((element) => {
@@ -108,7 +109,7 @@ export default class News extends Component {
                         <div className="ms-auto p-2 bd-highlight">
                             <button disabled={this.state.nextButtonState} type="button" className="btn btn-danger" onClick={this.handleNext}>
                                 {this.state.loading ? "Loading" : "Next\u2192"}
-                                </button></div>
+                            </button></div>
                     </div>
                 </div>
 

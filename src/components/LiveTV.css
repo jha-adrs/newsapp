@@ -1,0 +1,12 @@
+.livetv{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    
+}
+.videodiv{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    margin: -5px 0 0 -5px;
+}
