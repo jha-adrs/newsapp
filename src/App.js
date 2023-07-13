@@ -11,19 +11,20 @@ export default class App extends Component {
   render() {
     document.body.style.backgroundColor = '#2C3333';
     document.body.style.color = 'white';
+    const pageSize = 12;
     return (
       <BrowserRouter>
           <Navbar />
           <Routes>
             
-            <Route path="/" element={<News key="general" pageSize="4" category='general'/>} />
-            <Route path="/topics/business" element={<News key="business" pageSize="4" category='business'/>} />
-            <Route path="/topics/technology" element={<News key="technology" pageSize="4" category='technology'/>} />
-            <Route path="/topics/sports" element= {<News key="sports" pageSize="4" category='sports' />}/>
-            <Route path="/topics/politics" element={<News key="politics" pageSize="4" category='politics'/>} />
-            <Route path="/topics/health" element={<News key="health" pageSize="4" category='health'/>} />
-            <Route path='/LIVE' element={<LiveTV/>}/>
-            <Route path="/premium" element={<Premium key="premium" pageSize="4" category='premium'/>} />
+            <Route path="/" element={<News key="general" pageSize={pageSize} category='general'/>} />
+            <Route path="/topics/business" element={<News key="business" pageSize={pageSize} category='business'/>} />
+            <Route path="/topics/technology" element={<News key="technology" pageSize={pageSize} category='technology'/>} />
+            <Route path="/topics/sports" element= {<News key="sports" pageSize={pageSize} category='sports' />}/>
+            <Route path="/topics/politics" element={<News key="politics" pageSize={pageSize} category='politics'/>} />
+            <Route path="/topics/health" element={<News key="health" pageSize={pageSize} category='health'/>} />
+            <Route path='/LIVE' element={<LiveTV key="LIVE" />}/>
+            <Route path="/premium" element={<Premium key="premium" pageSize={pageSize} category='premium'/>} />
 
           </Routes>
        

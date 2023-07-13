@@ -16,6 +16,7 @@ export default class News extends Component {
         pageSize: PropTypes.number,
         category: PropTypes.string
     };
+    capitalize = (data) => { return data.charAt(0).toUpperCase() + data.slice(1); }
 
     constructor(props) {
         super(props);
@@ -23,72 +24,47 @@ export default class News extends Component {
             articles: [],
             loading: false,
             page: 1,
-            totalResults: 20,
-            nextButtonState: false
+            totalResults: 0,
+            pageSize: this.props.pageSize,
+            totalPages: 0
         }
+        document.title = `${this.capitalize(this.props.category)} - News with React`;
     }
+    async update() {
+        console.log(`Updating page ${this.state.page}`)
 
-
-    /*Runs after the return thing is rendered*/
-    async componentDidMount() {
-        console.log("Fetching through API");
+        this.setState({ loading: true });
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c1aa2105825b431591bdd4ee903f5165&page=${this.state.page}&pageSize=${this.props.pageSize}`
         let data = await fetch(url);
         let parsedData = await data.json();
-        this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults });
-
-        console.log("Fetch Done");
+        const totalPages = Math.ceil(parsedData.totalResults / this.props.pageSize);
+        this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, totalPages: totalPages });
+        console.log("Fetch Done update");
+        this.setState({ loading: false });
     }
-    handleNext = async () => {
-        if (this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)) {
-            console.log("Exceeded max number of pages");
-            this.setState({ nextButtonState: true }); // Next button gets disabled if max number of pages is found
-        }
-        else {
-            this.setState({
-                page: this.state.page + 1, loading: true
-            })
-            console.log("Fetching through API");
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c1aa2105825b431591bdd4ee903f5165&page=${this.state.page}&pageSize=${this.props.pageSize}`
-            let data = await fetch(url);
-            let parsedData = await data.json();
-            this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults });
-            console.log("Fetch Done");
 
-            this.setState({ loading: false });
-        }
+    /*Runs after the return thing is rendered*/
+    async componentDidMount() {
+
+        this.update();
+    }
+
+
+    handleNext = async () => {
+        // Use callback instead
+        this.setState({ page: this.state.page + 1 }, () => { this.update(); });
 
     }
 
     handlePrevious = async () => {
+        this.setState({ page: this.state.page - 1 }, () => { this.update(); });
 
-        if (this.state.page === 1) {
-
-        }
-        else {
-            this.setState({
-                page: this.state.page - 1
-
-            })
-            this.setState({ nextButtonState: false, loading: true });
-            console.log("Fetching through API");
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c1aa2105825b431591bdd4ee903f5165&page=${this.state.page}&pageSize=${this.props.pageSize}`
-            let data = await fetch(url);
-            let parsedData = await data.json();
-            this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults });
-            console.log("Fetch Done");
-
-            this.setState({ loading: false });
-        }
     }
 
     render() {
-
-
         return (
             <div className='container my-3' id='news-container'>
-
-                <h2 id='top-headlines my-2'>{this.props.headline} Headlines</h2>
+                <h2 id='top-headlines my-2'>Latest in {this.capitalize(this.props.category)} </h2>
                 {this.state.loading && <Spinner />}
                 <div className='row'>
                     {this.state.articles && this.state.articles.map((element) => {
@@ -96,23 +72,21 @@ export default class News extends Component {
                             return null;
                         }
                         return (
-                            <div className=' col-sm-12 col-lg-3 col-md-4' >
-                                <NewsComponent title={element.title ? element.title.slice(0, 40) + "..." : ""} description={element.description ? element.description.slice(0, 50) + "..." : ""} imageLink={element.urlToImage} articleLink={element.url} />
-
+                            <div className=' col-sm-12 col-lg-3 col-md-4' key={element.url} >
+                                <NewsComponent title={element.title ? element.title.slice(0, 40) + "..." : ""} description={element.description ? element.description.slice(0, 50) + "..." : ""} imageLink={element.urlToImage} articleLink={element.url} author={element.author} publishDate={element.publishedAt} source={element.source.name} />
                             </div>
                         )
                     })}
                     <div className="d-flex bd-highlight mb-3">
                         <div className="p-2 bd-highlight">
-                            <button disabled={this.state.page <= 1} type="button" className="btn btn-danger" onClick={this.handlePrevious}>&larr; Previous</button>
+                            <button disabled={this.state.loading || this.state.page <= 1} type="button" className="btn btn-danger" onClick={this.handlePrevious}>&larr; Previous</button>
                         </div>
                         <div className="ms-auto p-2 bd-highlight">
-                            <button disabled={this.state.nextButtonState} type="button" className="btn btn-danger" onClick={this.handleNext}>
+                            <button disabled={this.state.loading || this.state.page >= this.state.totalPages} type="button" className="btn btn-danger" onClick={this.handleNext}>
                                 {this.state.loading ? "Loading" : "Next\u2192"}
                             </button></div>
                     </div>
                 </div>
-
             </div>
 
         )
