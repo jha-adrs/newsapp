@@ -1,19 +1,18 @@
 import "./Spinner.css"
 import React, { Component } from 'react'
 
-export default class Spinner extends Component {
 
-  render() {
-    return (
+export default function Spinner() {
+  return (
 
-      <div className="loaderPopup">
+    <div className="loaderPopup">
 
-        <div className='loader'>
-          Loading...
+      <div className='loader'>
+        Loading...
 
-        </div>
       </div>
+    </div>
 
-    )
-  }
+  )
 }
+
