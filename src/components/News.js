@@ -75,7 +75,6 @@ export default class News extends Component {
                 loader={<Spinner />}
                 style={{ overflow: 'visible' }}
                 scrollableTarget="news-container"
-                endMessage="Nothing more to load"
               >
                 <ul>
                 <div className="container"> {/* Remove container from inside the row */}

@@ -32,7 +32,7 @@ export default class NewsComponent extends Component {
                         <a href={articleLink} target="_blank" className="btn btn-block btn-danger  " style={buttonStyle}>Read More</a>
                     </div>
                     <div className="card-footer " style = {darkStyle}>
-                    Source: {this.props.source} <br/>Published On {this.props.publishDate}
+                    Source: {this.props.source} <br/>Published On {this.props.publishDate.slice(0,10)}
                         <br/>
                     </div>
                 </div>
