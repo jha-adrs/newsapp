@@ -5,6 +5,7 @@ import News from './components/News';
 import LiveTV from './components/LiveTV';
 import Premium from './components/Premium';
 import { BrowserRouter, Routes,  Route } from 'react-router-dom';
+import image from './assets/background.jpg';
 
 export default class App extends Component {
 
@@ -15,6 +16,8 @@ export default class App extends Component {
     return (
       <BrowserRouter>
           <Navbar />
+      
+    
           <Routes>
             
             <Route path="/" element={<News key="general" pageSize={pageSize} category='general'/>} />
@@ -27,7 +30,6 @@ export default class App extends Component {
             <Route path="/premium" element={<Premium key="premium" pageSize={pageSize} category='premium'/>} />
 
           </Routes>
-       
       </BrowserRouter>
     )
   }
