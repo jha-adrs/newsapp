@@ -2212,3 +2212,4 @@ src/backend/newsapp/Lib/site-packages/uvicorn-0.22.0.dist-info/REQUESTED
 src/backend/newsapp/Lib/site-packages/uvicorn-0.22.0.dist-info/WHEEL
 src/backend/newsapp/Lib/site-packages/uvicorn-0.22.0.dist-info/licenses/LICENSE.md
 src/backend/newsapp/Scripts/uvicorn.exe
+.env

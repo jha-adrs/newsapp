@@ -14,7 +14,9 @@ export default class News extends Component {
     static propTypes = {
         country: PropTypes.string,
         pageSize: PropTypes.number,
-        category: PropTypes.string
+        category: PropTypes.string,
+        setProgress: PropTypes.func.isRequired,
+        apiKey: PropTypes.string.isRequired
     };
     capitalize = (data) => { return data.charAt(0).toUpperCase() + data.slice(1); }
 
@@ -32,28 +34,31 @@ export default class News extends Component {
         document.title = `${this.capitalize(this.props.category)} - News with React`;
     }
     async update() {
-        console.log(`Updating page ${this.state.page}`)
-
+        console.log(`Updating page ${this.state.page}`);
+        this.props.setProgress(10);
         this.setState({ loading: true });
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f7f2e8d1214b487680cd3f321b04995a&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
         let data = await fetch(url);
+        this.props.setProgress(50);
+
         let parsedData = await data.json();
         
         const totalPages = Math.ceil(parsedData.totalResults / this.props.pageSize);
+        this.props.setProgress(70);
+
         this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, totalPages: totalPages, loading: false });
+        this.props.setProgress(100);
         
     }
 
     /*Runs after the return thing is rendered*/
     async componentDidMount() {
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f7f2e8d1214b487680cd3f321b04995a&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-
         this.update();
     }
 
     fetchMoreData=async()=>{
         const nextPage = this.state.page +1;
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f7f2e8d1214b487680cd3f321b04995a&page=${nextPage}&pageSize=${this.props.pageSize}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${nextPage}&pageSize=${this.props.pageSize}`;
         let data = await fetch(url);
         let parsedData = await data.json();
         this.setState({
@@ -67,7 +72,7 @@ export default class News extends Component {
           <>
             <h1 className="text-center" style={{ margin: '35px 0px' }}>Trending in {this.capitalize(this.props.category)} Stories</h1>
             {this.state.loading && <Spinner />}
-            <div className="news-container">
+            <div className="news-container" >
               <InfiniteScroll
                 dataLength={this.state.articles.length}
                 next={this.fetchMoreData}
@@ -75,9 +80,11 @@ export default class News extends Component {
                 loader={<Spinner />}
                 style={{ overflow: 'visible' }}
                 scrollableTarget="news-container"
+                className='news-content'
+                
               >
-                <ul>
-                <div className="container"> {/* Remove container from inside the row */}
+                
+                <div className="container" > {/* Remove container from inside the row */}
                   <div className="row">
                     {this.state.articles.map((element) => {
                       return (
@@ -88,7 +95,7 @@ export default class News extends Component {
                     })}
                   </div>
                 </div>
-                </ul>
+               
               </InfiniteScroll>
               </div>
             
